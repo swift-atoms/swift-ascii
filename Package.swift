@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "ASCII", targets: ["ASCII"]),
-        .library(name: "ASCII Standard Library Integration", targets: ["ASCII Standard Library Integration"]),
-        .library(name: "ASCII Foundation Library Integration", targets: ["ASCII Foundation Library Integration"]),
+
+        .library(name: "ASCII Foundation Integration", targets: ["ASCII Foundation Integration"]),
         .library(name: "ASCII Test Support", targets: ["ASCII Test Support"]),
     ],
     dependencies: [
@@ -31,20 +31,13 @@ let package = Package(
             ],
             path: "Sources/ASCII"
         ),
+        
         .target(
-            name: "ASCII Standard Library Integration",
+            name: "ASCII Foundation Integration",
             dependencies: [
                 .target(name: "ASCII"),
             ],
-            path: "Sources/ASCII Standard Library Integration"
-        ),
-        .target(
-            name: "ASCII Foundation Library Integration",
-            dependencies: [
-                .target(name: "ASCII"),
-                .target(name: "ASCII Standard Library Integration"),
-            ],
-            path: "Sources/ASCII Foundation Library Integration"
+            path: "Sources/ASCII Foundation Integration"
         ),
         .target(
             name: "ASCII Test Support",
@@ -59,8 +52,7 @@ let package = Package(
                 .target(name: "ASCII"),
                 .product(name: "Byte", package: "swift-byte"),
                 .target(name: "ASCII Test Support"),
-                .target(name: "ASCII Standard Library Integration"),
-                .target(name: "ASCII Foundation Library Integration"),
+                .target(name: "ASCII Foundation Integration"),
             ],
             path: "Tests/ASCII Tests"
         ),

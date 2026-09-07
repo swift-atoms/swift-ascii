@@ -1,38 +1,4 @@
-extension Character {
-
-    public static var ascii: ASCII.Type {
-        ASCII.self
-    }
-
-    public var ascii: ASCII {
-        ASCII(character: self)
-    }
-
-    public struct ASCII {
-
-        public let character: Character
-    }
-}
-
-extension UInt8 {
-
-    @inline(always)
-    public init?(ascii character: Character) {
-        guard let value = character.asciiValue else { return nil }
-        self = value
-    }
-}
-
-extension Character {
-
-    @inlinable
-    public init?(ascii byte: UInt8) {
-        guard byte <= 0x7F else { return nil }
-        self.init(UnicodeScalar(byte))
-    }
-}
-
-extension Character.ASCII {
+extension Swift.Character.ASCII {
 
     @inlinable
     public static func unchecked(_ byte: UInt8) -> Character {

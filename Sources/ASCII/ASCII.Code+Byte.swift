@@ -26,44 +26,6 @@ extension ASCII.Code {
     public static var max: ASCII.Code { ASCII.Code(unchecked: Byte(bitPattern: 0x7F)) }
 }
 
-extension ASCII.Code: ExpressibleByIntegerLiteral {
-
-    @_disfavoredOverload
-    @inlinable
-    public init(integerLiteral value: UInt8.IntegerLiteralType) {
-        let u = UInt8(integerLiteral: value)
-        precondition(
-            u < 0x80,
-            "ASCII.Code integer literal must be in 0x00...0x7F (got 0x\(String(u, radix: 16)))"
-        )
-        self.init(unchecked: Byte(bitPattern: u))
-    }
-}
-
-extension ASCII.Code: Equatable {
-
-    @inlinable
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.underlying == rhs.underlying
-    }
-}
-
-extension ASCII.Code: Hashable {
-
-    @inlinable
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(underlying)
-    }
-}
-
-extension ASCII.Code: Comparable {
-
-    @inlinable
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.underlying < rhs.underlying
-    }
-}
-
 extension ASCII.Code {
 
     @inlinable
