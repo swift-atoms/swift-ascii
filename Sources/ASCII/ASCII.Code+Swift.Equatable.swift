@@ -1,4 +1,4 @@
-public import Byte
+import Byte
 
 extension ASCII.Code: Swift.Equatable {
 

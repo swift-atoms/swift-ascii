@@ -13,7 +13,6 @@ let package = Package(
     ],
     products: [
         .library(name: "ASCII", targets: ["ASCII"]),
-
         .library(name: "ASCII Foundation Integration", targets: ["ASCII Foundation Integration"]),
         .library(name: "ASCII Test Support", targets: ["ASCII Test Support"]),
     ],

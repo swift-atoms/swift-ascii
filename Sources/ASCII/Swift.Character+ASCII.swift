@@ -22,3 +22,7 @@ extension Swift.Character {
         self.init(UnicodeScalar(byte))
     }
 }
+
+extension Swift.Character {
+    public typealias Case = ASCII::ASCII.Case
+}
