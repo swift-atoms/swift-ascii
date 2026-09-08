@@ -18,6 +18,8 @@ let package = Package(
         .library(name: "ASCII Test Support", targets: ["ASCII Test Support"]),
     ],
     dependencies: [
+
+        .package(url: "https://github.com/swift-atoms/swift-carrier.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-byte.git",
             branch: "main"
@@ -27,6 +29,7 @@ let package = Package(
         .target(
             name: "ASCII",
             dependencies: [
+                .product(name: "Carrier", package: "swift-carrier"),
                 .product(name: "Byte", package: "swift-byte"),
             ],
             path: "Sources/ASCII"
@@ -55,6 +58,12 @@ let package = Package(
                 .target(name: "ASCII Foundation Integration"),
             ],
             path: "Tests/ASCII Tests"
+        ),
+        .testTarget(
+            name: "Consolidated ASCII Carrier Tests",
+            dependencies: [
+.target(name: "ASCII"), .product(name: "Carrier", package: "swift-carrier")],
+            path: "Tests/Consolidated swift-ascii-carrier"
         ),
     ],
     swiftLanguageModes: [.v6]
