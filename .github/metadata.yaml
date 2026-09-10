@@ -1,5 +1,3 @@
-# .github/metadata.yaml
-# Triaged by AI-assisted bulk pass (2026-04-29).
 description: "Typed ASCII code point with the full INCITS 4-1986 character set as named constants, plus classification, case-conversion, and serialization for Swift."
 topics:
   - primitives

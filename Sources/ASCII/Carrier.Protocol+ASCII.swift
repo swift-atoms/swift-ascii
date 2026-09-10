@@ -2,7 +2,6 @@ public import Carrier
 
 extension Carrier.`Protocol` where Underlying == UInt8 {
 
-    /// Accesses the ASCII constants projected into this carrier type.
     @inlinable
     public static var ascii: ASCII.Namespace<Self>.Type {
         ASCII.Namespace<Self>.self
@@ -11,7 +10,6 @@ extension Carrier.`Protocol` where Underlying == UInt8 {
 
 extension ASCII {
 
-    /// ASCII constants projected into a carrier whose underlying value is a byte.
     @frozen
     public enum Namespace<Owner: Carrier.`Protocol`> where Owner.Underlying == UInt8 {}
 }
