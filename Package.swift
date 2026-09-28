@@ -15,6 +15,13 @@ let package = Package(
         .library(name: "ASCII", targets: ["ASCII"]),
         .library(name: "ASCII Foundation Integration", targets: ["ASCII Foundation Integration"]),
         .library(name: "ASCII Test Support", targets: ["ASCII Test Support"]),
+        .library(name: "ASCII Parser Test Support", targets: ["ASCII Parser Test Support"]),
+        .library(name: "ASCII Serializer Test Support", targets: ["ASCII Serializer Test Support"]),
+    ],
+    traits: [
+        .trait(name: "Coder", description: "Absorbed Coder integration", enabledTraits: ["Parser"]),
+        .trait(name: "Parser", description: "Absorbed Parser integration"),
+        .trait(name: "Serializer", description: "Absorbed Serializer integration"),
     ],
     dependencies: [
 
@@ -22,7 +29,17 @@ let package = Package(
         .package(
             url: "https://github.com/swift-atoms/swift-byte.git",
             branch: "main"
-        )
+        ),
+        .package(url: "https://github.com/swift-atoms/swift-binary.git", branch: "main", traits: [.trait(name: "Serializer", condition: .when(traits: ["Serializer"]))]),
+        .package(url: "https://github.com/swift-atoms/swift-checkpoint.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-coder.git", branch: "main", traits: [.trait(name: "Carrier", condition: .when(traits: ["Coder"]))]),
+        .package(url: "https://github.com/swift-atoms/swift-cursor.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-either.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-iterator.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-map.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-parser.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-serializer.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
     ],
     targets: [
         .target(
@@ -30,10 +47,16 @@ let package = Package(
             dependencies: [
                 .product(name: "Carrier", package: "swift-carrier"),
                 .product(name: "Byte", package: "swift-byte"),
+                .product(name: "Checkpoint", package: "swift-checkpoint", condition: .when(traits: ["Coder", "Parser"])),
+                .product(name: "Coder", package: "swift-coder", condition: .when(traits: ["Coder"])),
+                .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Coder", "Parser"])),
+                .product(name: "Iterator", package: "swift-iterator", condition: .when(traits: ["Coder", "Parser"])),
+                .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Coder", "Parser"])),
+                .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Coder", "Serializer"])),
             ],
             path: "Sources/ASCII"
         ),
-        
+
         .target(
             name: "ASCII Foundation Integration",
             dependencies: [
@@ -64,6 +87,21 @@ let package = Package(
 .target(name: "ASCII"), .product(name: "Carrier", package: "swift-carrier")],
             path: "Tests/Consolidated swift-ascii-carrier"
         ),
+        .testTarget(name: "Absorbed swift-ascii-parser ASCII Binary Parser Tests", dependencies: [.target(name: "ASCII"), .target(name: "ASCII Parser Test Support"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/ASCII Binary Parser Tests"),
+        .testTarget(name: "Absorbed swift-ascii-parser ASCII Decimal Parser Tests", dependencies: [.target(name: "ASCII"), .target(name: "ASCII Parser Test Support"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/ASCII Decimal Parser Tests"),
+        .testTarget(name: "Absorbed swift-ascii-parser ASCII Hexadecimal Parser Tests", dependencies: [.target(name: "ASCII"), .target(name: "ASCII Parser Test Support"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/ASCII Hexadecimal Parser Tests"),
+        .testTarget(name: "Absorbed swift-ascii-parser ASCII Octal Parser Tests", dependencies: [.target(name: "ASCII"), .target(name: "ASCII Parser Test Support"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/ASCII Octal Parser Tests"),
+        .testTarget(name: "Absorbed swift-ascii-parser ASCII Parser Standard Library Integration Tests", dependencies: [.target(name: "ASCII"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/ASCII Parser Standard Library Integration Tests"),
+        .testTarget(name: "Absorbed swift-ascii-parser Declarative Parser Syntax Tests", dependencies: [.target(name: "ASCII"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"])), .product(name: "Either", package: "swift-either", condition: .when(traits: ["Parser"])), .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/Declarative Parser Syntax Tests"),
+        .target(name: "ASCII Parser Test Support", dependencies: [.target(name: "ASCII"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-ascii-parser/Support"),
+        .testTarget(name: "Absorbed swift-ascii-serializer ASCII Binary Serializer Tests", dependencies: [.target(name: "ASCII"), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Serializer"]))], path: "Tests/Absorbed/swift-ascii-serializer/ASCII Binary Serializer Tests"),
+        .testTarget(name: "Absorbed swift-ascii-serializer ASCII Decimal Serializer Tests", dependencies: [.target(name: "ASCII"), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Serializer"]))], path: "Tests/Absorbed/swift-ascii-serializer/ASCII Decimal Serializer Tests"),
+        .testTarget(name: "Absorbed swift-ascii-serializer ASCII Hexadecimal Serializer Tests", dependencies: [.target(name: "ASCII"), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Serializer"]))], path: "Tests/Absorbed/swift-ascii-serializer/ASCII Hexadecimal Serializer Tests"),
+        .testTarget(name: "Absorbed swift-ascii-serializer ASCII Octal Serializer Tests", dependencies: [.target(name: "ASCII"), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Serializer"]))], path: "Tests/Absorbed/swift-ascii-serializer/ASCII Octal Serializer Tests"),
+        .testTarget(name: "Absorbed swift-ascii-serializer Serializable ASCII Tests", dependencies: [.target(name: "ASCII"), .product(name: "Binary", package: "swift-binary", condition: .when(traits: ["Serializer"])), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Serializer"]))], path: "Tests/Absorbed/swift-ascii-serializer/Serializable ASCII Tests"),
+        .target(name: "ASCII Serializer Test Support", dependencies: [.target(name: "ASCII")], path: "Tests/Absorbed/swift-ascii-serializer/Support"),
+        .testTarget(name: "Absorbed swift-ascii-coder ASCII Decimal Coder Tests", dependencies: [.target(name: "ASCII"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Coder"])), .product(name: "Coder", package: "swift-coder", condition: .when(traits: ["Coder"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Coder"])), .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Coder"])), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Coder"]))], path: "Tests/Absorbed/swift-ascii-coder/ASCII Decimal Coder Tests"),
+        .testTarget(name: "Absorbed swift-carrier-coder Carrier Coder Tests", dependencies: [.target(name: "ASCII"), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Coder"])), .product(name: "Carrier", package: "swift-carrier", condition: .when(traits: ["Coder"])), .product(name: "Coder", package: "swift-coder", condition: .when(traits: ["Coder"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Coder"])), .product(name: "Map", package: "swift-map", condition: .when(traits: ["Coder"])), .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Coder"])), .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Coder"])), .product(name: "Tagged", package: "swift-tagged", condition: .when(traits: ["Coder"]))], path: "Tests/Absorbed/swift-carrier-coder/Carrier Coder Tests"),
     ],
     swiftLanguageModes: [.v6]
 )

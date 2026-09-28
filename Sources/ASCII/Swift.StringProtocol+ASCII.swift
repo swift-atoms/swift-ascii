@@ -30,7 +30,7 @@ extension Swift.StringProtocol {
     }
 
     @inlinable
-    public init<Codes: Sequence>(ascii codes: Codes)
+    public init<Codes: Swift.Sequence>(ascii codes: Codes)
     where Codes.Element == ASCII::ASCII.Code {
         self.init(decoding: codes.lazy.map(\.underlying), as: UTF8.self)
     }
