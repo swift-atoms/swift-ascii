@@ -58,11 +58,11 @@ let package = Package(
             dependencies: [
                 .product(name: "Carrier", package: "swift-carrier"),
                 .product(name: "Byte", package: "swift-byte"),
-                .product(name: "Checkpoint", package: "swift-checkpoint", condition: .when(traits: ["Coder", "Parser"])),
+                .product(name: "Checkpoint", package: "swift-checkpoint"),
                 .product(name: "Coder", package: "swift-coder", condition: .when(traits: ["Coder"])),
-                .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Coder", "Parser"])),
-                .product(name: "Iterator", package: "swift-iterator", condition: .when(traits: ["Coder", "Parser"])),
-                .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Coder", "Parser"])),
+                .product(name: "Cursor", package: "swift-cursor"),
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Parser", package: "swift-parser"),
                 .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Coder", "Serializer"])),
             ],
             path: "Sources/ASCII"
