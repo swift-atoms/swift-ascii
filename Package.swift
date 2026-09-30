@@ -63,7 +63,7 @@ let package = Package(
                 .product(name: "Cursor", package: "swift-cursor"),
                 .product(name: "Iterator", package: "swift-iterator"),
                 .product(name: "Parser", package: "swift-parser"),
-                .product(name: "Serializer", package: "swift-serializer", condition: .when(traits: ["Coder", "Serializer"])),
+                .product(name: "Serializer", package: "swift-serializer"),
             ],
             path: "Sources/ASCII"
         ),
