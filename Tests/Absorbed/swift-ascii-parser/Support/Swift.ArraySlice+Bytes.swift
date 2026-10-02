@@ -1,6 +1,6 @@
 #if Parser
 public import Byte
-public import Cursor
+import Cursor
 
 extension Swift.ArraySlice where Element == Byte {
 

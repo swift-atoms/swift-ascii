@@ -1,7 +1,7 @@
 #if Parser
-public import Byte
+import Byte
 internal import Checkpoint
-public import Cursor
+package import Cursor
 internal import Iterator
 
 package enum IntegerParsing {

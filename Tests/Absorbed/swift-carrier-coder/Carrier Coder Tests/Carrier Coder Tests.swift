@@ -1,5 +1,5 @@
 #if Coder
-public import Map
+import Map
 import ASCII
 import Byte
 import Coder
