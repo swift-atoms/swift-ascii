@@ -23,11 +23,6 @@ extension ASCII.Binary {
 }
 
 extension ASCII.Binary.Parser: Parsing {
-    public var body: Never {
-        borrowing get {
-            return fatalError("\(Self.self) is a leaf coder: implement parse and serialize directly")
-        }
-    }
 
 
     public typealias Output = T

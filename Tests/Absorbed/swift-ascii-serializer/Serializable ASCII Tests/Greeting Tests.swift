@@ -16,11 +16,6 @@ extension Greeting {
 }
 
 extension Greeting.Serializer: Serializing {
-    public var body: Never {
-        borrowing get {
-            return fatalError("\(Self.self) is a leaf: implement its conformance requirements directly")
-        }
-    }
 
     typealias Output = Greeting
     typealias Buffer = [ASCII.Code]
