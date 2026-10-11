@@ -180,7 +180,7 @@ struct `Characters expose ASCII conversion and classification` {
         @Test
         func `ASCII characters survive conversion to UInt8 and back`() {
             let original: Character = "X"
-            let byte = UInt8(ascii: original)!
+            let byte = original.asciiValue!
             let restored = Character(ascii: byte)!
             #expect(restored == original)
         }

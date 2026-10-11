@@ -20,7 +20,7 @@ private struct Token: Sendable, Codable {
         guard !bytes.isEmpty else { throw .empty }
 
         for byte in bytes {
-            guard byte.bitPattern.ascii.isAlphanumeric || byte == ASCII.Code.hyphen.byte else {
+            guard ASCII.Code(unchecked: byte).isAlphanumeric || byte == ASCII.Code.hyphen.byte else {
                 throw .invalidCharacter(byte)
             }
         }

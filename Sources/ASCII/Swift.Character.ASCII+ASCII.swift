@@ -12,50 +12,50 @@ extension Swift.Character.ASCII {
 
     @inlinable
     public func callAsFunction(case: ASCII::ASCII.Case) -> Character {
-        guard let byte = UInt8(ascii: character) else { return character }
+        guard let byte = character.asciiValue else { return character }
         let converted = ASCII.Case.Conversion.convert(ASCII.Code(byte), to: `case`)
         return Character(UnicodeScalar(converted.underlying))
     }
 
     @_transparent
     public var isWhitespace: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isWhitespace
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isWhitespace
     }
 
     @_transparent
     public var isDigit: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isDigit
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isDigit
     }
 
     @_transparent
     public var isLetter: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isLetter
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isLetter
     }
 
     @inlinable
     public var isAlphanumeric: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isAlphanumeric
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isAlphanumeric
     }
 
     @inlinable
     public var isHexDigit: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isHexDigit
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isHexDigit
     }
 
     @_transparent
     public var isUppercase: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isUppercase
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isUppercase
     }
 
     @_transparent
     public var isLowercase: Bool {
-        guard let value = UInt8(ascii: character) else { return false }
-        return value.ascii.isLowercase
+        guard let value = character.asciiValue else { return false }
+        return ASCII.Code(value).isLowercase
     }
 }
