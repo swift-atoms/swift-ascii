@@ -1,6 +1,6 @@
 #if Serializer
-extension ASCII {
+    extension ASCII {
 
-    public enum Serializer {}
-}
+        public enum Serializer {}
+    }
 #endif

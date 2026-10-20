@@ -10,7 +10,9 @@ extension ASCII.Decimal {
     }
 }
 
-extension ASCII.Decimal.`Decimal serialization preserves full width integer values`.`Integer extremes serialize without overflow` {
+extension ASCII.Decimal.`Decimal serialization preserves full width integer values`
+    .`Integer extremes serialize without overflow`
+{
 
     @Test
     func
@@ -28,7 +30,9 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     func `Serializing the largest UInt128 writes all thirty nine decimal digits`() {
         var buffer: [Byte] = []
         ASCII.Decimal.serialize(UInt128.max, into: &buffer)
-        let expected = Array("340282366920938463463374607431768211455".utf8).map(Byte.init(bitPattern:))
+        let expected = Array("340282366920938463463374607431768211455".utf8).map(
+            Byte.init(bitPattern:)
+        )
         #expect(buffer == expected)
     }
 
@@ -36,7 +40,9 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     func `Serializing the largest Int128 writes all thirty nine decimal digits`() {
         var buffer: [Byte] = []
         ASCII.Decimal.serialize(Int128.max, into: &buffer)
-        let expected = Array("170141183460469231731687303715884105727".utf8).map(Byte.init(bitPattern:))
+        let expected = Array("170141183460469231731687303715884105727".utf8).map(
+            Byte.init(bitPattern:)
+        )
         #expect(buffer == expected)
     }
 
@@ -44,7 +50,9 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     func `Serializing the smallest Int128 writes its magnitude without trapping`() {
         var buffer: [Byte] = []
         ASCII.Decimal.serialize(Int128.min, into: &buffer)
-        let expected = Array("-170141183460469231731687303715884105728".utf8).map(Byte.init(bitPattern:))
+        let expected = Array("-170141183460469231731687303715884105728".utf8).map(
+            Byte.init(bitPattern:)
+        )
         #expect(buffer == expected)
     }
 
@@ -71,7 +79,9 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
 }
 
 extension ASCII.Decimal.`Decimal serialization preserves full width integer values` {
-    private func encoded<T: FixedWidthInteger>(_ value: T) -> (ContiguousArray<Byte>, ContiguousArray<ASCII.Code>) {
+    private func encoded<T: FixedWidthInteger>(
+        _ value: T
+    ) -> (ContiguousArray<Byte>, ContiguousArray<ASCII.Code>) {
         var bytes: ContiguousArray<Byte> = [Byte(bitPattern: 0x41)]
         var codes: ContiguousArray<ASCII.Code> = [ASCII.Code(0x41)]
         ASCII.Decimal.serialize(value, into: &bytes)
@@ -80,7 +90,8 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     }
 
     @Test(arguments: [Int128.min, -18_446_744_073_709_551_617, -1, 0, 1, Int128.max])
-    func `Signed bytes and codes share decimal digits and preserve their prefixes`(_ value: Int128) {
+    func `Signed bytes and codes share decimal digits and preserve their prefixes`(_ value: Int128)
+    {
         let (bytes, codes) = encoded(value)
         let expected = [UInt8(0x41)] + Array(String(value).utf8)
         #expect(bytes.map(\.bitPattern) == expected)
@@ -88,7 +99,9 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     }
 
     @Test(arguments: [UInt128(0), 1, 18_446_744_073_709_551_616, UInt128.max])
-    func `Unsigned bytes and codes share decimal digits and preserve their prefixes`(_ value: UInt128) {
+    func `Unsigned bytes and codes share decimal digits and preserve their prefixes`(
+        _ value: UInt128
+    ) {
         let (bytes, codes) = encoded(value)
         let expected = [UInt8(0x41)] + Array(String(value).utf8)
         #expect(bytes.map(\.bitPattern) == expected)

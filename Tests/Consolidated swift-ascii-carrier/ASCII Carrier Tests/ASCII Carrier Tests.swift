@@ -1,6 +1,4 @@
 import ASCII
-import ASCII
-import Carrier
 import Carrier
 import Testing
 

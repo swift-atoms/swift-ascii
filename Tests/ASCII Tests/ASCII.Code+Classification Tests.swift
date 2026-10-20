@@ -6,7 +6,10 @@ import Testing
 struct `ASCII Code classification` {
     @Suite
     struct `Byte predicates classify ASCII character values` {
-        @Test(arguments: [ASCII::ASCII.Code.htab.underlying, ASCII::ASCII.Code.lf.underlying, ASCII::ASCII.Code.cr.underlying, ASCII::ASCII.Code.sp.underlying])
+        @Test(arguments: [
+            ASCII::ASCII.Code.htab.underlying, ASCII::ASCII.Code.lf.underlying,
+            ASCII::ASCII.Code.cr.underlying, ASCII::ASCII.Code.sp.underlying,
+        ])
         func `Whitespace bytes are recognized`(byte: UInt8) {
             #expect(ASCII::ASCII.Code(byte).isWhitespace)
         }
@@ -28,17 +31,27 @@ struct `ASCII Code classification` {
             #expect(ASCII::ASCII.Code(byte).isLetter)
         }
 
-        @Test(arguments: Array(ASCII::ASCII.Code.nul.underlying...ASCII::ASCII.Code.us.underlying) + [ASCII::ASCII.Code.del.underlying])
+        @Test(
+            arguments: Array(ASCII::ASCII.Code.nul.underlying...ASCII::ASCII.Code.us.underlying) + [
+                ASCII::ASCII.Code.del.underlying
+            ]
+        )
         func `Control characters are recognized`(byte: UInt8) {
             #expect(ASCII::ASCII.Code(byte).isControl)
         }
 
-        @Test(arguments: Array(ASCII::ASCII.Code.sp.underlying...ASCII::ASCII.Code.tilde.underlying))
+        @Test(
+            arguments: Array(ASCII::ASCII.Code.sp.underlying...ASCII::ASCII.Code.tilde.underlying)
+        )
         func `Printable characters are recognized`(byte: UInt8) {
             #expect(ASCII::ASCII.Code(byte).isPrintable)
         }
 
-        @Test(arguments: Array(ASCII::ASCII.Code.exclamationPoint.underlying...ASCII::ASCII.Code.tilde.underlying))
+        @Test(
+            arguments: Array(
+                ASCII::ASCII.Code.exclamationPoint.underlying...ASCII::ASCII.Code.tilde.underlying
+            )
+        )
         func `Visible characters are recognized`(byte: UInt8) {
             #expect(ASCII::ASCII.Code(byte).isVisible)
         }

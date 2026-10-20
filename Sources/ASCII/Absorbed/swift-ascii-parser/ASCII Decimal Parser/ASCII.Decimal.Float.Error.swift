@@ -1,17 +1,17 @@
 #if Parser
-extension ASCII.Decimal.Float {
+    extension ASCII.Decimal.Float {
 
-    public enum Error: Swift.Error, Sendable, Equatable {
+        public enum Error: Swift.Error, Sendable, Equatable {
 
-        case empty
+            case empty
 
-        case missingDigits
+            case missingDigits
 
-        case overflow
+            case overflow
 
-        case underflow
+            case underflow
 
-        case malformed
+            case malformed
+        }
     }
-}
 #endif

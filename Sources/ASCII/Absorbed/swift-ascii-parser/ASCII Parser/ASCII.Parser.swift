@@ -1,6 +1,6 @@
 #if Parser
-extension ASCII {
+    extension ASCII {
 
-    public enum Parser {}
-}
+        public enum Parser {}
+    }
 #endif

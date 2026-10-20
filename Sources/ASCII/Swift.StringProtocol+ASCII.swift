@@ -16,11 +16,12 @@ extension Swift.StringProtocol {
     }
 
     public init(ascii lineEnding: ASCII::ASCII.Line.Ending) {
-        let bytes: [UInt8] = switch lineEnding {
-        case .lf: [ASCII::ASCII.Character.Control.lf]
-        case .cr: [ASCII::ASCII.Character.Control.cr]
-        case .crlf: [ASCII::ASCII.Character.Control.cr, ASCII::ASCII.Character.Control.lf]
-        }
+        let bytes: [UInt8] =
+            switch lineEnding {
+            case .lf: [ASCII::ASCII.Character.Control.lf]
+            case .cr: [ASCII::ASCII.Character.Control.cr]
+            case .crlf: [ASCII::ASCII.Character.Control.cr, ASCII::ASCII.Character.Control.lf]
+            }
         self.init(decoding: bytes, as: UTF8.self)
     }
 

@@ -1,6 +1,6 @@
 #if Parser
-extension ASCII.Decimal {
+    extension ASCII.Decimal {
 
-    public enum Float {}
-}
+        public enum Float {}
+    }
 #endif

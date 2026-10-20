@@ -274,7 +274,9 @@ extension ASCII.Namespace {
 
     public static var lowLine: Owner { Owner(ASCII.Code.lowLine.underlying) }
 
-    public static var leftSingleQuotationMark: Owner { Owner(ASCII.Code.leftSingleQuotationMark.underlying) }
+    public static var leftSingleQuotationMark: Owner {
+        Owner(ASCII.Code.leftSingleQuotationMark.underlying)
+    }
 
     public static var graveAccent: Owner { Owner(ASCII.Code.graveAccent.underlying) }
 

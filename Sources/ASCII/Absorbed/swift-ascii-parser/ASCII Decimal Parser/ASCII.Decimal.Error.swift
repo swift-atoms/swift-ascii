@@ -1,17 +1,17 @@
 #if Parser
-extension ASCII.Decimal {
+    extension ASCII.Decimal {
 
-    public enum Error: Swift.Error, Sendable, Equatable {
+        public enum Error: Swift.Error, Sendable, Equatable {
 
-        case invalidCount(Int)
+            case invalidCount(Int)
 
-        case noDigits
+            case noDigits
 
-        case overflow
+            case overflow
 
-        case insufficientDigits
+            case insufficientDigits
 
-        case invalidSign
+            case invalidSign
+        }
     }
-}
 #endif

@@ -1,14 +1,14 @@
 #if Parser
-public import Byte
+    public import Byte
 
-extension ASCII {
+    extension ASCII {
 
-    public protocol Parseable {
+        public protocol Parseable {
 
-        associatedtype Failure: Swift.Error
+            associatedtype Failure: Swift.Error
 
-        init<Bytes: Swift.Collection>(ascii bytes: Bytes) throws(Failure)
-        where Bytes.Element == Byte
+            init<Bytes: Swift.Collection>(ascii bytes: Bytes) throws(Failure)
+            where Bytes.Element == Byte
+        }
     }
-}
 #endif

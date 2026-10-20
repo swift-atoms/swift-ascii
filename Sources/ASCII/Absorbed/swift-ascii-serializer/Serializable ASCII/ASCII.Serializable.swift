@@ -1,12 +1,12 @@
 #if Serializer
-extension ASCII {
+    extension ASCII {
 
-    public protocol Serializable {
+        public protocol Serializable {
 
-        static func serialize<Buffer: RangeReplaceableCollection>(
-            _ serializable: borrowing Self,
-            into buffer: inout Buffer
-        ) where Buffer.Element == ASCII.Code
+            static func serialize<Buffer: RangeReplaceableCollection>(
+                _ serializable: borrowing Self,
+                into buffer: inout Buffer
+            ) where Buffer.Element == ASCII.Code
+        }
     }
-}
 #endif

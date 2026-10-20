@@ -19,7 +19,7 @@ struct `Characters expose ASCII conversion and classification` {
 
     @Suite
     struct `Characters recognize ASCII digits` {
-        @Test(arguments: Array<Character>("0123456789" as String))
+        @Test(arguments: [Character]("0123456789" as String))
         func `Digit characters are recognized`(char: Character) {
             #expect(char.ascii.isDigit)
         }
@@ -54,7 +54,11 @@ struct `Characters expose ASCII conversion and classification` {
 
     @Suite
     struct `Characters recognize ASCII letters and digits` {
-        @Test(arguments: Array<Character>("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" as String))
+        @Test(
+            arguments: [Character](
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" as String
+            )
+        )
         func `Letters and digits are alphanumeric`(char: Character) {
             #expect(char.ascii.isAlphanumeric, "Character '\(char)' should be alphanumeric")
         }
@@ -69,7 +73,7 @@ struct `Characters expose ASCII conversion and classification` {
 
     @Suite
     struct `Characters recognize hexadecimal digits` {
-        @Test(arguments: Array<Character>("0123456789ABCDEFabcdef" as String))
+        @Test(arguments: [Character]("0123456789ABCDEFabcdef" as String))
         func `Every hexadecimal digit is recognized`(char: Character) {
             #expect(char.ascii.isHexDigit, "Character '\(char)' should be a hex digit")
         }
