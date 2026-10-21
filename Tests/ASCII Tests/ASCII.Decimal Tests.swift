@@ -90,8 +90,7 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     }
 
     @Test(arguments: [Int128.min, -18_446_744_073_709_551_617, -1, 0, 1, Int128.max])
-    func `Signed bytes and codes share decimal digits and preserve their prefixes`(_ value: Int128)
-    {
+    func `Signed bytes and codes share decimal digits and preserve their prefixes`(_ value: Int128) {
         let (bytes, codes) = encoded(value)
         let expected = [UInt8(0x41)] + Array(String(value).utf8)
         #expect(bytes.map(\.bitPattern) == expected)

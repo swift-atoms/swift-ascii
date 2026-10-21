@@ -31,8 +31,7 @@ extension ASCII.Validation {
 
         let highBitMask: UInt64 = 0x8080_8080_8080_8080
         while i + 8 <= count {
-            let chunk = unsafe base.advanced(by: i).withMemoryRebound(to: UInt64.self, capacity: 1)
-            { unsafe $0.pointee }
+            let chunk = unsafe base.advanced(by: i).withMemoryRebound(to: UInt64.self, capacity: 1) { unsafe $0.pointee }
             if chunk & highBitMask != 0 {
                 return false
             }

@@ -5,7 +5,12 @@
     internal import Iterator
 
     package enum IntegerParsing {
-        package enum Radix: Int { case binary = 2, octal = 8, decimal = 10, hexadecimal = 16 }
+        package enum Radix: Int {
+            case binary = 2
+            case octal = 8
+            case decimal = 10
+            case hexadecimal = 16
+        }
         package enum Error: Swift.Error {
             case noDigits, overflow, insufficientDigits, invalidSign
             case invalidCount(Int)

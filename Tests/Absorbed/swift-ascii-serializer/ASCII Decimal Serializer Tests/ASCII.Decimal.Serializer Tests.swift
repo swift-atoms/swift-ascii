@@ -103,8 +103,7 @@
         }
 
         @Test(arguments: [UInt128(0), 1, 18_446_744_073_709_551_616, UInt128.max])
-        func `Unsigned values retain every digit through the serializer protocol`(_ value: UInt128)
-        {
+        func `Unsigned values retain every digit through the serializer protocol`(_ value: UInt128) {
             var codes = [ASCII.Code(0x41)]
             append(value, using: ASCII.Decimal.Serializer<UInt128>(), to: &codes)
             #expect(codes == [ASCII.Code(0x41)] + String(value).utf8.map(ASCII.Code.init))
