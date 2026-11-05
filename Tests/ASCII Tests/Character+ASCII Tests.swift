@@ -153,6 +153,12 @@ struct `Characters expose ASCII conversion and classification` {
             #expect(Character("🌍").ascii(case: .upper) == "🌍")
             #expect(Character("é").ascii(case: .lower) == "é")
         }
+
+        @Test
+        func `ASCII case conversion preserves a CRLF character`() {
+            #expect(Character("\r\n").ascii(case: .upper) == "\r\n")
+            #expect(Character("\r\n").ascii(case: .lower) == "\r\n")
+        }
     }
 
     @Suite
