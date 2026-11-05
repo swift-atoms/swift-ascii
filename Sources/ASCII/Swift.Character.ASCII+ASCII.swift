@@ -12,7 +12,7 @@ extension Swift.Character.ASCII {
 
     @inlinable
     public func callAsFunction(case: ASCII::ASCII.Case) -> Character {
-        guard let byte = character.asciiValue else { return character }
+        guard character.utf8.count == 1, let byte = character.asciiValue else { return character }
         let converted = ASCII.Case.Conversion.convert(ASCII.Code(byte), to: `case`)
         return Character(UnicodeScalar(converted.underlying))
     }
