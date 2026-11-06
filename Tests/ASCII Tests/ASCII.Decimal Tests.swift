@@ -2,7 +2,9 @@ import ASCII
 import Byte
 import Testing
 
-extension ASCII.Decimal {
+enum `ASCII.Decimal Tests` {}
+
+extension `ASCII.Decimal Tests` {
     @Suite
     struct `Decimal serialization preserves full width integer values` {
         @Suite struct `No additional decimal serialization cases are defined` {}
@@ -10,7 +12,7 @@ extension ASCII.Decimal {
     }
 }
 
-extension ASCII.Decimal.`Decimal serialization preserves full width integer values`
+extension `ASCII.Decimal Tests`.`Decimal serialization preserves full width integer values`
     .`Integer extremes serialize without overflow`
 {
 
@@ -78,7 +80,7 @@ extension ASCII.Decimal.`Decimal serialization preserves full width integer valu
     }
 }
 
-extension ASCII.Decimal.`Decimal serialization preserves full width integer values` {
+extension `ASCII.Decimal Tests`.`Decimal serialization preserves full width integer values` {
     private func encoded<T: FixedWidthInteger>(
         _ value: T
     ) -> (ContiguousArray<Byte>, ContiguousArray<ASCII.Code>) {
