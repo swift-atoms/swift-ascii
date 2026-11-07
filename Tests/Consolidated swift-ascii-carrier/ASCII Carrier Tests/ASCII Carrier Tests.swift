@@ -2,8 +2,8 @@ import ASCII
 import Carrier
 import Testing
 
-@Suite("ASCII Carrier")
-struct ASCII_Carrier_Tests {
+@Suite
+struct `ASCII Carrier` {
 
     @Test
     func `ASCII.Code carries its byte`() {
