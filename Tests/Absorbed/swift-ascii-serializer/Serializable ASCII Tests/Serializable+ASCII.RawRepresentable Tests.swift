@@ -12,8 +12,11 @@
 
     extension Command {
         @Suite struct `Raw values determine the ASCII representation` {
-            @Suite struct `Serialization preserves the represented bytes` {}
         }
+    }
+
+    extension Command.`Raw values determine the ASCII representation` {
+        @Suite struct `Serialization preserves the represented bytes` {}
     }
 
     extension Command.`Raw values determine the ASCII representation`
@@ -40,8 +43,11 @@
 
     extension Frame {
         @Suite struct `Raw values determine the ASCII representation` {
-            @Suite struct `Serialization preserves the represented bytes` {}
         }
+    }
+
+    extension Frame.`Raw values determine the ASCII representation` {
+        @Suite struct `Serialization preserves the represented bytes` {}
     }
 
     extension Frame.`Raw values determine the ASCII representation`

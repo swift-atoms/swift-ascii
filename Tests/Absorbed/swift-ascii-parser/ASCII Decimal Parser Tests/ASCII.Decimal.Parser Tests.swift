@@ -11,7 +11,11 @@
     struct `ASCII.Decimal.Parser Tests` {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
+    }
+
+    extension `ASCII.Decimal.Parser Tests` {
         @Suite struct `Count Policy` {}
+
         @Suite struct `Sign Policy` {}
     }
 

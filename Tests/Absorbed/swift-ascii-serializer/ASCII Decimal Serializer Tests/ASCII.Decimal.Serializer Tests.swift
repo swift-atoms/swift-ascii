@@ -3,14 +3,23 @@
     import ASCII
     import Testing
 
-    @Suite
-    struct `Decimal serializers produce ASCII codes` {
+enum `ASCII.Decimal.Serializer Tests` {}
+
+extension `ASCII.Decimal.Serializer Tests` {
+        @Suite
+        struct `Decimal serializers produce ASCII codes` {
+        }
+}
+
+    extension `ASCII.Decimal.Serializer Tests`.`Decimal serializers produce ASCII codes` {
         @Suite struct `Values serialize as decimal digits` {}
+
         @Suite struct `Integer boundaries serialize without narrowing` {}
+
         @Suite struct `Explicit serializers compose through their protocol` {}
     }
 
-    extension `Decimal serializers produce ASCII codes`.`Values serialize as decimal digits` {
+    extension `ASCII.Decimal.Serializer Tests`.`Decimal serializers produce ASCII codes`.`Values serialize as decimal digits` {
         @Test
         func `Zero serializes as one digit`() {
             let serializer = ASCII.Decimal.Serializer<UInt8>()
@@ -52,7 +61,7 @@
         }
     }
 
-    extension `Decimal serializers produce ASCII codes`
+    extension `ASCII.Decimal.Serializer Tests`.`Decimal serializers produce ASCII codes`
         .`Integer boundaries serialize without narrowing`
     {
         @Test
@@ -84,7 +93,7 @@
         }
     }
 
-    extension `Decimal serializers produce ASCII codes`
+    extension `ASCII.Decimal.Serializer Tests`.`Decimal serializers produce ASCII codes`
         .`Explicit serializers compose through their protocol`
     {
         private func append<S: Serializing>(

@@ -2,13 +2,21 @@
     import ASCII
     import Testing
 
-    @Suite
-    struct `Explicit decimal serialization appends to an existing buffer` {
+enum `ASCII.Decimal.Serializer+Appending Tests` {}
+
+extension `ASCII.Decimal.Serializer+Appending Tests` {
+        @Suite
+        struct `Explicit decimal serialization appends to an existing buffer` {
+        }
+}
+
+    extension `ASCII.Decimal.Serializer+Appending Tests`.`Explicit decimal serialization appends to an existing buffer` {
         @Suite struct `Decimal digits append in order` {}
+
         @Suite struct `Integer boundaries append without overflow` {}
     }
 
-    extension `Explicit decimal serialization appends to an existing buffer`
+    extension `ASCII.Decimal.Serializer+Appending Tests`.`Explicit decimal serialization appends to an existing buffer`
         .`Decimal digits append in order`
     {
         @Test
@@ -40,7 +48,7 @@
         }
     }
 
-    extension `Explicit decimal serialization appends to an existing buffer`
+    extension `ASCII.Decimal.Serializer+Appending Tests`.`Explicit decimal serialization appends to an existing buffer`
         .`Integer boundaries append without overflow`
     {
         @Test

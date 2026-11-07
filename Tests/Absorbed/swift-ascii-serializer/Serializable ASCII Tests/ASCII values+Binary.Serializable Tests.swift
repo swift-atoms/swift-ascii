@@ -308,31 +308,35 @@
         }
     }
 
-    @Suite
-    struct `Values determine their own binary representation` {
-        @Test
-        func `The message value determines its serialized delimiter`() throws {
+enum `ASCII values+Binary.Serializable Tests` {}
 
-            let message = DelimitedMessage(
-                __unchecked: (),
-                parts: ["x", "y"],
-                delimiter: ASCII.Code.comma.byte
-            )
+extension `ASCII values+Binary.Serializable Tests` {
+        @Suite
+        struct `Values determine their own binary representation` {
+            @Test
+            func `The message value determines its serialized delimiter`() throws {
 
-            let serialized: [Byte] = DelimitedMessage.serialize(message)
-            #expect(serialized == "x,y".utf8.map(Byte.init(bitPattern:)))
+                let message = DelimitedMessage(
+                    __unchecked: (),
+                    parts: ["x", "y"],
+                    delimiter: ASCII.Code.comma.byte
+                )
+
+                let serialized: [Byte] = DelimitedMessage.serialize(message)
+                #expect(serialized == "x,y".utf8.map(Byte.init(bitPattern:)))
+            }
+
+            @Test
+            func `Valid token bytes survive parsing and serialization`() throws {
+
+                let original: [Byte] = "valid-token".utf8.map(Byte.init(bitPattern:))
+
+                let token: Token = try .init(ascii: original)
+                let serialized: [Byte] = token.bytes
+                #expect(serialized == original)
+            }
         }
-
-        @Test
-        func `Valid token bytes survive parsing and serialization`() throws {
-
-            let original: [Byte] = "valid-token".utf8.map(Byte.init(bitPattern:))
-
-            let token: Token = try .init(ascii: original)
-            let serialized: [Byte] = token.bytes
-            #expect(serialized == original)
-        }
-    }
+}
 
     private struct HTMLAnchor: Binary.Serializable {
         let href: Token
@@ -350,219 +354,223 @@
         }
     }
 
-    @Suite
-    struct `Nominal types serialize through explicit binary conformances` {
+extension `ASCII values+Binary.Serializable Tests` {
+        @Suite
+        struct `Nominal types serialize through explicit binary conformances` {
 
-        @Test
-        func `Tokens serialize through their binary conformance`() throws {
-            let token: Token = try .init("my-token")
+            @Test
+            func `Tokens serialize through their binary conformance`() throws {
+                let token: Token = try .init("my-token")
 
-            var buffer: [Byte] = []
-            token.serialize(into: &buffer)
-
-            #expect(buffer == "my-token".utf8.map(Byte.init(bitPattern:)))
-        }
-
-        @Test
-        func `Delimited messages serialize through their binary conformance`() {
-            let message = DelimitedMessage(
-                __unchecked: (),
-                parts: ["a", "b", "c"],
-                delimiter: ASCII.Code.comma.byte
-            )
-
-            var buffer: [Byte] = []
-            message.serialize(into: &buffer)
-
-            #expect(buffer == "a,b,c".utf8.map(Byte.init(bitPattern:)))
-        }
-
-        @Test
-        func `A token writes its representation into a buffer`() throws {
-            let token: Token = try .init("hello-world")
-
-            var buffer: [Byte] = []
-            token.serialize(into: &buffer)
-
-            #expect(buffer == "hello-world".utf8.map(Byte.init(bitPattern:)))
-        }
-
-        @Test
-        func `The bytes property returns the token representation`() throws {
-            let token: Token = try .init("swift-token")
-
-            let bytes: [Byte] = token.bytes
-
-            #expect(bytes == "swift-token".utf8.map(Byte.init(bitPattern:)))
-        }
-
-        @Test
-        func `Serialization preserves the existing buffer content`() throws {
-            let token: Token = try .init("suffix")
-
-            var buffer: [Byte] = "prefix-".utf8.map(Byte.init(bitPattern:))
-            token.serialize(into: &buffer)
-
-            #expect(buffer == "prefix-suffix".utf8.map(Byte.init(bitPattern:)))
-        }
-
-        @Test
-        func `ASCII values compose inside a containing serializer`() throws {
-            let anchor = try HTMLAnchor(
-                href: .init("example-link"),
-                text: "Click here"
-            )
-
-            let result = String(anchor)
-
-            #expect(result == "<a href=\"example-link\">Click here</a>")
-        }
-
-        @Test
-        func `Multiple ASCII values serialize into a shared buffer`() throws {
-            let token1: Token = try .init("first")
-            let token2: Token = try .init("second")
-            let message = DelimitedMessage(
-                __unchecked: (),
-                parts: ["a", "b"],
-                delimiter: ASCII.Code.colon.byte
-            )
-
-            var buffer: [Byte] = []
-            token1.serialize(into: &buffer)
-            buffer.append(ASCII.Code.hyphen.byte)
-            token2.serialize(into: &buffer)
-            buffer.append(ASCII.Code.verticalLine.byte)
-            message.serialize(into: &buffer)
-
-            #expect(buffer == "first-second|a:b".utf8.map(Byte.init(bitPattern:)))
-        }
-
-        @Test
-        func `Serialization preserves ordering in a reserved buffer`() throws {
-            let tokens = try (1...10).map { try Token("token-\($0)") }
-
-            var buffer: [Byte] = []
-            buffer.reserveCapacity(200)
-
-            for (index, token) in tokens.enumerated() {
-                if index > 0 {
-                    buffer.append(ASCII.Code.comma.byte)
-                }
+                var buffer: [Byte] = []
                 token.serialize(into: &buffer)
+
+                #expect(buffer == "my-token".utf8.map(Byte.init(bitPattern:)))
             }
 
-            let result = String(decoding: buffer, as: UTF8.self)
-            #expect(result.hasPrefix("token-1,token-2"))
-            #expect(result.hasSuffix("token-10"))
-        }
+            @Test
+            func `Delimited messages serialize through their binary conformance`() {
+                let message = DelimitedMessage(
+                    __unchecked: (),
+                    parts: ["a", "b", "c"],
+                    delimiter: ASCII.Code.comma.byte
+                )
 
-        @Test
-        func `Buffer and convenience serialization produce the same bytes`() throws {
-            let token: Token = try .init("roundtrip-test")
+                var buffer: [Byte] = []
+                message.serialize(into: &buffer)
 
-            let staticBytes: [Byte] = Token.serialize(token)
-
-            var streamingBuffer: [Byte] = []
-            token.serialize(into: &streamingBuffer)
-
-            let propertyBytes: [Byte] = token.bytes
-
-            #expect(staticBytes == streamingBuffer)
-            #expect(staticBytes == propertyBytes)
-        }
-    }
-
-    @Suite
-    struct `Binary serializers compose through shared buffers` {
-
-        @Test
-        func `A response buffer combines literal bytes and serialized values`() throws {
-
-            var response: [Byte] = []
-
-            response.append(contentsOf: "X-Token: ".utf8.map(Byte.init(bitPattern:)))
-            let token: Token = try .init("auth-token-123")
-            token.serialize(into: &response)
-            response.append(contentsOf: "\r\n".utf8.map(Byte.init(bitPattern:)))
-
-            let result = String(decoding: response, as: UTF8.self)
-            #expect(result == "X-Token: auth-token-123\r\n")
-        }
-
-        @Test
-        func `An HTML anchor embeds its serialized token`() throws {
-            let anchor = try HTMLAnchor(
-                href: .init("https-link"),
-                text: "Visit site"
-            )
-
-            let bytes: [Byte] = anchor.bytes
-
-            let string = String(anchor)
-
-            #expect(bytes == string.utf8.map(Byte.init(bitPattern:)))
-            #expect(string == "<a href=\"https-link\">Visit site</a>")
-        }
-
-        @Test
-        func `A reusable buffer preserves each serialized result`() throws {
-            var buffer: [Byte] = []
-            var results: [[Byte]] = []
-
-            let inputs = ["alpha", "beta", "gamma"]
-
-            for input in inputs {
-                buffer.removeAll(keepingCapacity: true)
-                let token: Token = try .init(input)
-                token.serialize(into: &buffer)
-                results.append(buffer)
+                #expect(buffer == "a,b,c".utf8.map(Byte.init(bitPattern:)))
             }
 
-            #expect(results.count == 3)
-            #expect(results[0] == "alpha".utf8.map(Byte.init(bitPattern:)))
-            #expect(results[1] == "beta".utf8.map(Byte.init(bitPattern:)))
-            #expect(results[2] == "gamma".utf8.map(Byte.init(bitPattern:)))
-        }
+            @Test
+            func `A token writes its representation into a buffer`() throws {
+                let token: Token = try .init("hello-world")
 
-        @Test
-        func `A containing serializer composes nested ASCII values`() throws {
+                var buffer: [Byte] = []
+                token.serialize(into: &buffer)
 
-            struct Document: Binary.Serializable {
-                let title: Token
-                let links: [HTMLAnchor]
+                #expect(buffer == "hello-world".utf8.map(Byte.init(bitPattern:)))
+            }
 
-                static func serialize<Buffer>(_ doc: Self, into buffer: inout Buffer)
-                where Buffer: RangeReplaceableCollection, Buffer.Element == Byte {
-                    buffer.append(
-                        contentsOf: "<html><head><title>".utf8.map(Byte.init(bitPattern:))
-                    )
-                    Token.serialize(doc.title, into: &buffer)
-                    buffer.append(
-                        contentsOf: "</title></head><body>".utf8.map(Byte.init(bitPattern:))
-                    )
-                    for link in doc.links {
-                        link.serialize(into: &buffer)
+            @Test
+            func `The bytes property returns the token representation`() throws {
+                let token: Token = try .init("swift-token")
+
+                let bytes: [Byte] = token.bytes
+
+                #expect(bytes == "swift-token".utf8.map(Byte.init(bitPattern:)))
+            }
+
+            @Test
+            func `Serialization preserves the existing buffer content`() throws {
+                let token: Token = try .init("suffix")
+
+                var buffer: [Byte] = "prefix-".utf8.map(Byte.init(bitPattern:))
+                token.serialize(into: &buffer)
+
+                #expect(buffer == "prefix-suffix".utf8.map(Byte.init(bitPattern:)))
+            }
+
+            @Test
+            func `ASCII values compose inside a containing serializer`() throws {
+                let anchor = try HTMLAnchor(
+                    href: .init("example-link"),
+                    text: "Click here"
+                )
+
+                let result = String(anchor)
+
+                #expect(result == "<a href=\"example-link\">Click here</a>")
+            }
+
+            @Test
+            func `Multiple ASCII values serialize into a shared buffer`() throws {
+                let token1: Token = try .init("first")
+                let token2: Token = try .init("second")
+                let message = DelimitedMessage(
+                    __unchecked: (),
+                    parts: ["a", "b"],
+                    delimiter: ASCII.Code.colon.byte
+                )
+
+                var buffer: [Byte] = []
+                token1.serialize(into: &buffer)
+                buffer.append(ASCII.Code.hyphen.byte)
+                token2.serialize(into: &buffer)
+                buffer.append(ASCII.Code.verticalLine.byte)
+                message.serialize(into: &buffer)
+
+                #expect(buffer == "first-second|a:b".utf8.map(Byte.init(bitPattern:)))
+            }
+
+            @Test
+            func `Serialization preserves ordering in a reserved buffer`() throws {
+                let tokens = try (1...10).map { try Token("token-\($0)") }
+
+                var buffer: [Byte] = []
+                buffer.reserveCapacity(200)
+
+                for (index, token) in tokens.enumerated() {
+                    if index > 0 {
+                        buffer.append(ASCII.Code.comma.byte)
                     }
-                    buffer.append(contentsOf: "</body></html>".utf8.map(Byte.init(bitPattern:)))
+                    token.serialize(into: &buffer)
                 }
+
+                let result = String(decoding: buffer, as: UTF8.self)
+                #expect(result.hasPrefix("token-1,token-2"))
+                #expect(result.hasSuffix("token-10"))
             }
 
-            let doc = try Document(
-                title: .init("My-Page"),
-                links: [
-                    HTMLAnchor(href: .init("link1"), text: "First"),
-                    HTMLAnchor(href: .init("link2"), text: "Second"),
-                ]
-            )
+            @Test
+            func `Buffer and convenience serialization produce the same bytes`() throws {
+                let token: Token = try .init("roundtrip-test")
 
-            let html = String(doc)
+                let staticBytes: [Byte] = Token.serialize(token)
 
-            #expect(html.contains("<title>My-Page</title>"))
-            #expect(html.contains("<a href=\"link1\">First</a>"))
-            #expect(html.contains("<a href=\"link2\">Second</a>"))
+                var streamingBuffer: [Byte] = []
+                token.serialize(into: &streamingBuffer)
+
+                let propertyBytes: [Byte] = token.bytes
+
+                #expect(staticBytes == streamingBuffer)
+                #expect(staticBytes == propertyBytes)
+            }
         }
-    }
+}
+
+extension `ASCII values+Binary.Serializable Tests` {
+        @Suite
+        struct `Binary serializers compose through shared buffers` {
+
+            @Test
+            func `A response buffer combines literal bytes and serialized values`() throws {
+
+                var response: [Byte] = []
+
+                response.append(contentsOf: "X-Token: ".utf8.map(Byte.init(bitPattern:)))
+                let token: Token = try .init("auth-token-123")
+                token.serialize(into: &response)
+                response.append(contentsOf: "\r\n".utf8.map(Byte.init(bitPattern:)))
+
+                let result = String(decoding: response, as: UTF8.self)
+                #expect(result == "X-Token: auth-token-123\r\n")
+            }
+
+            @Test
+            func `An HTML anchor embeds its serialized token`() throws {
+                let anchor = try HTMLAnchor(
+                    href: .init("https-link"),
+                    text: "Visit site"
+                )
+
+                let bytes: [Byte] = anchor.bytes
+
+                let string = String(anchor)
+
+                #expect(bytes == string.utf8.map(Byte.init(bitPattern:)))
+                #expect(string == "<a href=\"https-link\">Visit site</a>")
+            }
+
+            @Test
+            func `A reusable buffer preserves each serialized result`() throws {
+                var buffer: [Byte] = []
+                var results: [[Byte]] = []
+
+                let inputs = ["alpha", "beta", "gamma"]
+
+                for input in inputs {
+                    buffer.removeAll(keepingCapacity: true)
+                    let token: Token = try .init(input)
+                    token.serialize(into: &buffer)
+                    results.append(buffer)
+                }
+
+                #expect(results.count == 3)
+                #expect(results[0] == "alpha".utf8.map(Byte.init(bitPattern:)))
+                #expect(results[1] == "beta".utf8.map(Byte.init(bitPattern:)))
+                #expect(results[2] == "gamma".utf8.map(Byte.init(bitPattern:)))
+            }
+
+            @Test
+            func `A containing serializer composes nested ASCII values`() throws {
+
+                struct Document: Binary.Serializable {
+                    let title: Token
+                    let links: [HTMLAnchor]
+
+                    static func serialize<Buffer>(_ doc: Self, into buffer: inout Buffer)
+                    where Buffer: RangeReplaceableCollection, Buffer.Element == Byte {
+                        buffer.append(
+                            contentsOf: "<html><head><title>".utf8.map(Byte.init(bitPattern:))
+                        )
+                        Token.serialize(doc.title, into: &buffer)
+                        buffer.append(
+                            contentsOf: "</title></head><body>".utf8.map(Byte.init(bitPattern:))
+                        )
+                        for link in doc.links {
+                            link.serialize(into: &buffer)
+                        }
+                        buffer.append(contentsOf: "</body></html>".utf8.map(Byte.init(bitPattern:)))
+                    }
+                }
+
+                let doc = try Document(
+                    title: .init("My-Page"),
+                    links: [
+                        HTMLAnchor(href: .init("link1"), text: "First"),
+                        HTMLAnchor(href: .init("link2"), text: "Second"),
+                    ]
+                )
+
+                let html = String(doc)
+
+                #expect(html.contains("<title>My-Page</title>"))
+                #expect(html.contains("<a href=\"link1\">First</a>"))
+                #expect(html.contains("<a href=\"link2\">Second</a>"))
+            }
+        }
+}
 
     private struct CorrectEmailAddress: Sendable, Codable, Hashable {
         let localPart: String

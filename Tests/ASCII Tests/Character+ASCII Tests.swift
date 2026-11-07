@@ -2,8 +2,15 @@ import Testing
 
 @testable import ASCII
 
-@Suite
-struct `Characters expose ASCII conversion and classification` {
+enum `Character+ASCII Tests` {}
+
+extension `Character+ASCII Tests` {
+    @Suite
+    struct `Characters expose ASCII conversion and classification` {
+    }
+}
+
+extension `Character+ASCII Tests`.`Characters expose ASCII conversion and classification` {
     @Suite
     struct `Characters recognize ASCII whitespace` {
         @Test(arguments: [" ", "\t", "\n", "\r"])

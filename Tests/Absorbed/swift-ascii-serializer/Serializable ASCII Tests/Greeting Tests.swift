@@ -47,8 +47,11 @@
 
     extension Greeting {
         @Suite struct `Greetings serialize through ASCII and Binary APIs` {
-            @Suite struct `ASCII codes retain their byte values` {}
         }
+    }
+
+    extension Greeting.`Greetings serialize through ASCII and Binary APIs` {
+        @Suite struct `ASCII codes retain their byte values` {}
     }
 
     extension Greeting.`Greetings serialize through ASCII and Binary APIs`

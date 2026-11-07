@@ -11,7 +11,11 @@
     struct `ASCII.Octal.Parser Tests` {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
+    }
+
+    extension `ASCII.Octal.Parser Tests` {
         @Suite struct `Count Policy` {}
+
         @Suite struct `Sign Policy` {}
     }
 

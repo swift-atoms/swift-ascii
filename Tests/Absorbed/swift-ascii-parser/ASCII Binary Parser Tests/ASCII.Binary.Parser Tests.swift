@@ -11,7 +11,11 @@
     struct `ASCII.Binary.Parser Tests` {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
+    }
+
+    extension `ASCII.Binary.Parser Tests` {
         @Suite struct `Count Policy` {}
+
         @Suite struct `Sign Policy` {}
     }
 

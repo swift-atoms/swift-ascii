@@ -7,9 +7,13 @@ enum `ASCII.Decimal Tests` {}
 extension `ASCII.Decimal Tests` {
     @Suite
     struct `Decimal serialization preserves full width integer values` {
-        @Suite struct `No additional decimal serialization cases are defined` {}
-        @Suite struct `Integer extremes serialize without overflow` {}
     }
+}
+
+extension `ASCII.Decimal Tests`.`Decimal serialization preserves full width integer values` {
+    @Suite struct `No additional decimal serialization cases are defined` {}
+
+    @Suite struct `Integer extremes serialize without overflow` {}
 }
 
 extension `ASCII.Decimal Tests`.`Decimal serialization preserves full width integer values`

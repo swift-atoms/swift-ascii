@@ -10,47 +10,51 @@
     import Tagged
     import Testing
 
-    @Suite
-    struct `Carrier Coder` {
+enum `Carrier Coder Tests` {}
 
-        @Test
-        func `a decimal coder represents a tagged limit`() throws(any Swift.Error) {
-            let coder = decimal.map(representing: Limit.self)
+extension `Carrier Coder Tests` {
+        @Suite
+        struct `Carrier Coder` {
 
-            var buffer: [Byte] = []
-            try coder.serialize(Limit(42), into: &buffer)
-            #expect(buffer == "42")
+            @Test
+            func `a decimal coder represents a tagged limit`() throws(any Swift.Error) {
+                let coder = decimal.map(representing: Limit.self)
 
-            var input = buffer[...]
-            #expect(try coder.parse(&input) == Limit(42))
-            #expect(input.isEmpty)
-        }
+                var buffer: [Byte] = []
+                try coder.serialize(Limit(42), into: &buffer)
+                #expect(buffer == "42")
 
-        @Test
-        func `a decimal coder represents a hand written carrier`() throws(any Swift.Error) {
-            let coder = decimal.map(representing: Celsius.self)
+                var input = buffer[...]
+                #expect(try coder.parse(&input) == Limit(42))
+                #expect(input.isEmpty)
+            }
 
-            var buffer: [Byte] = []
-            try coder.serialize(Celsius(-7), into: &buffer)
-            #expect(buffer == "-7")
+            @Test
+            func `a decimal coder represents a hand written carrier`() throws(any Swift.Error) {
+                let coder = decimal.map(representing: Celsius.self)
 
-            var input = buffer[...]
-            #expect(try coder.parse(&input) == Celsius(-7))
-        }
+                var buffer: [Byte] = []
+                try coder.serialize(Celsius(-7), into: &buffer)
+                #expect(buffer == "-7")
 
-        @Test
-        func `the represented coder reports the underlying failure`() {
-            let coder = decimal.map(representing: Limit.self)
-            var input: ArraySlice<Byte> = "x"
-            #expect(throws: ASCII.Decimal.Error.self) {
-                try coder.parse(&input)
+                var input = buffer[...]
+                #expect(try coder.parse(&input) == Celsius(-7))
+            }
+
+            @Test
+            func `the represented coder reports the underlying failure`() {
+                let coder = decimal.map(representing: Limit.self)
+                var input: ArraySlice<Byte> = "x"
+                #expect(throws: ASCII.Decimal.Error.self) {
+                    try coder.parse(&input)
+                }
+            }
+
+            var decimal: ASCII.Decimal.Coder<ArraySlice<Byte>, [Byte], Int> {
+                .init()
             }
         }
-
-        var decimal: ASCII.Decimal.Coder<ArraySlice<Byte>, [Byte], Int> {
-            .init()
-        }
-    }
+}
 
     enum Counter {}
 

@@ -2,8 +2,15 @@ import Testing
 
 @testable import ASCII
 
-@Suite
-struct `ASCII Code classification` {
+enum `ASCII.Code+Classification Tests` {}
+
+extension `ASCII.Code+Classification Tests` {
+    @Suite
+    struct `ASCII Code classification` {
+    }
+}
+
+extension `ASCII.Code+Classification Tests`.`ASCII Code classification` {
     @Suite
     struct `Byte predicates classify ASCII character values` {
         @Test(arguments: [
