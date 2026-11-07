@@ -6,13 +6,11 @@
     import Parser
     import Testing
 
-extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests` {
-        @Suite
-        struct `Declarative Parser Syntax Tests` {
-        }
-}
+    @Suite
+    struct `Declarative Parser Syntax Tests` {
+    }
 
-    extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests` {
+    extension `Declarative Parser Syntax Tests` {
         @Suite struct `Endpoint Tests` {}
 
         @Suite struct `Point Tests` {}
@@ -213,7 +211,7 @@ extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests` {
         }
     }
 
-    extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests`.`Endpoint Tests` {
+    extension `Declarative Parser Syntax Tests`.`Endpoint Tests` {
         @Test
         func `parses host:port`() throws {
             let parser = Network.Endpoint.Parser<ArraySlice<Byte>>()
@@ -277,7 +275,7 @@ extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests` {
         }
     }
 
-    extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests`.`Point Tests` {
+    extension `Declarative Parser Syntax Tests`.`Point Tests` {
         @Test
         func `parses x,y,z`() throws {
             let parser = Geometry.Point.Parser<ArraySlice<Byte>>()
@@ -340,7 +338,7 @@ extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests` {
         }
     }
 
-    extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests`.`Range Tests` {
+    extension `Declarative Parser Syntax Tests`.`Range Tests` {
         @Test
         func `parses lower-upper`() throws {
             let parser = Measurement.Range.Parser<ArraySlice<Byte>>()
@@ -393,7 +391,7 @@ extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests` {
         }
     }
 
-    extension `Declarative Parser Syntax Tests`.`Declarative Parser Syntax Tests`.`Composition Tests` {
+    extension `Declarative Parser Syntax Tests`.`Composition Tests` {
         @Test
         func `nested parser composes`() throws {
             let parser = Weighted.Endpoint.Parser<ArraySlice<Byte>>()
