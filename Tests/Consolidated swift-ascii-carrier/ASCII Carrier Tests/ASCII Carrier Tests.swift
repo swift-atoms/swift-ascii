@@ -5,15 +5,15 @@ import Testing
 @Suite("ASCII Carrier")
 struct ASCII_Carrier_Tests {
 
-    @Test("ASCII.Code carries its byte")
-    func codeConformance() {
+    @Test
+    func `ASCII.Code carries its byte`() {
         let code = ASCII.Code(0x41)
 
         #expect(underlying(of: code) == 0x41)
     }
 
-    @Test("ASCII constants project into any byte carrier")
-    func carrierProjection() {
+    @Test
+    func `ASCII constants project into any byte carrier`() {
         let values: [Byte] = [
             Byte.ascii.nul,
             Byte.ascii.space,
@@ -27,8 +27,8 @@ struct ASCII_Carrier_Tests {
         #expect(values.map(\.underlying) == [0x00, 0x20, 0x30, 0x41, 0x7A, 0x7E, 0x7F])
     }
 
-    @Test("Projected names preserve ASCII aliases")
-    func aliases() {
+    @Test
+    func `Projected names preserve ASCII aliases`() {
         #expect(Byte.ascii.htab == Byte.ascii.tab)
         #expect(Byte.ascii.lf == Byte.ascii.newline)
         #expect(Byte.ascii.exclamationPoint == Byte.ascii.exclamationMark)
@@ -38,8 +38,8 @@ struct ASCII_Carrier_Tests {
         #expect(Byte.ascii.rightBrace == Byte.ascii.rightCurlyBracket)
     }
 
-    @Test("Projected values are sourced from ASCII.Code")
-    func atomParity() {
+    @Test
+    func `Projected values are sourced from ASCII.Code`() {
         #expect(Byte.ascii.exclamationMark.underlying == ASCII.Code.exclamationMark.underlying)
         #expect(Byte.ascii.circumflex.underlying == ASCII.Code.circumflex.underlying)
         #expect(Byte.ascii.graveAccent.underlying == ASCII.Code.graveAccent.underlying)
