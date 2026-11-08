@@ -3,9 +3,9 @@
     import Serializer
     import Testing
 
-enum `FixedWidthInteger+ASCII.Decimal.Serializer Tests` {}
+    enum `FixedWidthInteger+ASCII.Decimal.Serializer Tests` {}
 
-extension `FixedWidthInteger+ASCII.Decimal.Serializer Tests` {
+    extension `FixedWidthInteger+ASCII.Decimal.Serializer Tests` {
         @Suite
         struct `Fixed width integers use an explicit decimal serializer` {
 
@@ -69,5 +69,5 @@ extension `FixedWidthInteger+ASCII.Decimal.Serializer Tests` {
                 #expect(codes == "18446744073709551615".utf8.map(ASCII.Code.init))
             }
         }
-}
+    }
 #endif

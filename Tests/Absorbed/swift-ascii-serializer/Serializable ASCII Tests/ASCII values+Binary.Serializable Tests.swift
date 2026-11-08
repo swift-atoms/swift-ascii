@@ -308,9 +308,9 @@
         }
     }
 
-enum `ASCII values+Binary.Serializable Tests` {}
+    enum `ASCII values+Binary.Serializable Tests` {}
 
-extension `ASCII values+Binary.Serializable Tests` {
+    extension `ASCII values+Binary.Serializable Tests` {
         @Suite
         struct `Values determine their own binary representation` {
             @Test
@@ -336,7 +336,7 @@ extension `ASCII values+Binary.Serializable Tests` {
                 #expect(serialized == original)
             }
         }
-}
+    }
 
     private struct HTMLAnchor: Binary.Serializable {
         let href: Token
@@ -354,7 +354,7 @@ extension `ASCII values+Binary.Serializable Tests` {
         }
     }
 
-extension `ASCII values+Binary.Serializable Tests` {
+    extension `ASCII values+Binary.Serializable Tests` {
         @Suite
         struct `Nominal types serialize through explicit binary conformances` {
 
@@ -477,9 +477,9 @@ extension `ASCII values+Binary.Serializable Tests` {
                 #expect(staticBytes == propertyBytes)
             }
         }
-}
+    }
 
-extension `ASCII values+Binary.Serializable Tests` {
+    extension `ASCII values+Binary.Serializable Tests` {
         @Suite
         struct `Binary serializers compose through shared buffers` {
 
@@ -570,7 +570,7 @@ extension `ASCII values+Binary.Serializable Tests` {
                 #expect(html.contains("<a href=\"link2\">Second</a>"))
             }
         }
-}
+    }
 
     private struct CorrectEmailAddress: Sendable, Codable, Hashable {
         let localPart: String

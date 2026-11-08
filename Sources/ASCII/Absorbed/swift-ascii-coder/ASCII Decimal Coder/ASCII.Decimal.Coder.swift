@@ -30,7 +30,7 @@
         }
     }
 
-extension ASCII.Decimal.Coder {
+    extension ASCII.Decimal.Coder {
         public typealias Output = T
 
         public typealias Failure = ASCII.Decimal.Error
@@ -79,5 +79,5 @@ extension ASCII.Decimal.Coder {
             }
             ASCII.Decimal.serialize(value.magnitude, into: &buffer)
         }
-}
+    }
 #endif

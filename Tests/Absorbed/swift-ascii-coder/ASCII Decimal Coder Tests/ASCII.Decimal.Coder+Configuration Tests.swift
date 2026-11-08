@@ -4,9 +4,9 @@
     import Cursor
     import Testing
 
-enum `ASCII.Decimal.Coder+Configuration Tests` {}
+    enum `ASCII.Decimal.Coder+Configuration Tests` {}
 
-extension `ASCII.Decimal.Coder+Configuration Tests` {
+    extension `ASCII.Decimal.Coder+Configuration Tests` {
         @Suite
         struct `Decimal coding configuration` {
             typealias Decimal = ASCII.Decimal.Coder<ArraySlice<Byte>, [Byte], Int>
@@ -99,5 +99,5 @@ extension `ASCII.Decimal.Coder+Configuration Tests` {
                 #expect(input.isEmpty)
             }
         }
-}
+    }
 #endif

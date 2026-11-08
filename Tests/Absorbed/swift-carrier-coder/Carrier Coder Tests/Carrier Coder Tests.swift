@@ -10,9 +10,9 @@
     import Tagged
     import Testing
 
-enum `Carrier Coder Tests` {}
+    enum `Carrier Coder Tests` {}
 
-extension `Carrier Coder Tests` {
+    extension `Carrier Coder Tests` {
         @Suite
         struct `Carrier Coder` {
 
@@ -54,7 +54,7 @@ extension `Carrier Coder Tests` {
                 .init()
             }
         }
-}
+    }
 
     enum Counter {}
 

@@ -2,13 +2,13 @@
     import ASCII
     import Testing
 
-enum `ASCII.Decimal.Serializer+Appending Tests` {}
+    enum `ASCII.Decimal.Serializer+Appending Tests` {}
 
-extension `ASCII.Decimal.Serializer+Appending Tests` {
+    extension `ASCII.Decimal.Serializer+Appending Tests` {
         @Suite
         struct `Explicit decimal serialization appends to an existing buffer` {
         }
-}
+    }
 
     extension `ASCII.Decimal.Serializer+Appending Tests`.`Explicit decimal serialization appends to an existing buffer` {
         @Suite struct `Decimal digits append in order` {}

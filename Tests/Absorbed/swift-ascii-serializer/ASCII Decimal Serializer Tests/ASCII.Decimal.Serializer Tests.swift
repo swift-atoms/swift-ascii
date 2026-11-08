@@ -3,13 +3,13 @@
     import ASCII
     import Testing
 
-enum `ASCII.Decimal.Serializer Tests` {}
+    enum `ASCII.Decimal.Serializer Tests` {}
 
-extension `ASCII.Decimal.Serializer Tests` {
+    extension `ASCII.Decimal.Serializer Tests` {
         @Suite
         struct `Decimal serializers produce ASCII codes` {
         }
-}
+    }
 
     extension `ASCII.Decimal.Serializer Tests`.`Decimal serializers produce ASCII codes` {
         @Suite struct `Values serialize as decimal digits` {}

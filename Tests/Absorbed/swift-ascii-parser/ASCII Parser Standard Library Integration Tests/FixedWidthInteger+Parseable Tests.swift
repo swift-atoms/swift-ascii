@@ -3,9 +3,9 @@
     import ASCII
     import Testing
 
-enum `FixedWidthInteger+Parseable Tests` {}
+    enum `FixedWidthInteger+Parseable Tests` {}
 
-extension `FixedWidthInteger+Parseable Tests` {
+    extension `FixedWidthInteger+Parseable Tests` {
         @Suite
         struct `Parseable Integer Tests` {
 
@@ -69,7 +69,7 @@ extension `FixedWidthInteger+Parseable Tests` {
                 #expect(value == UInt64.max)
             }
         }
-}
+    }
 
     extension `FixedWidthInteger+Parseable Tests`.`Parseable Integer Tests` {
         @Test func `accepts lazy and nonzero start collections`() throws {
