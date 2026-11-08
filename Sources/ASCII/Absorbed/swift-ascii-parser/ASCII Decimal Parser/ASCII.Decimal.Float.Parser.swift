@@ -323,7 +323,7 @@
         ]
 
         @inlinable
-        package static func clingerFastPath(
+        static func clingerFastPath(
             negative: Bool,
             mantissa: UInt64,
             q: Int
@@ -355,7 +355,7 @@
         internal static let maxExponentRoundToEven: Int = 23
 
         @inlinable
-        package static func eiselLemire(
+        static func eiselLemire(
             negative: Bool,
             mantissa: UInt64,
             q: Int
@@ -435,7 +435,7 @@
         }
 
         @inlinable
-        package static func makeDouble(
+        static func makeDouble(
             negative: Bool,
             mantissa: UInt64,
             power2: Int

@@ -677,7 +677,7 @@
     extension ASCII.Decimal.Float {
 
         @inlinable
-        package static func slowPath(bytes: [Byte]) throws(Self.Error) -> Double {
+        static func slowPath(bytes: [Byte]) throws(Self.Error) -> Double {
             var raw: [UInt8] = []
             raw.reserveCapacity(bytes.count)
             for byte in bytes {
@@ -688,7 +688,7 @@
         }
 
         @inlinable
-        package static func slowPath(string: Swift.String) throws(Self.Error) -> Double {
+        static func slowPath(string: Swift.String) throws(Self.Error) -> Double {
 
             guard let value = Swift.Double(string) else {
                 throw .overflow
