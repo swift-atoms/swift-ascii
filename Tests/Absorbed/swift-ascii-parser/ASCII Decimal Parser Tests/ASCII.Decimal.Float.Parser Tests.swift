@@ -289,7 +289,7 @@
             "1e-400", "10000000000000000000e-419",
             "-1e-400", "-10000000000000000000e-419",
         ])
-        func exponentExtremesAgreeAcrossMantissaPaths(_ text: String) throws {
+        func `exponent extremes agree across mantissa paths`(_ text: String) throws {
             let expected = try #require(Double(text))
             var input = bytes(text + ",tail")
             let value = try ASCII.Decimal.Float.Parser<Cursor>().parse(&input)

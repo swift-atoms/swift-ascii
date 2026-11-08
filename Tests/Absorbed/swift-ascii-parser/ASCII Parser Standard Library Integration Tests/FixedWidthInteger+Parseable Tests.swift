@@ -72,7 +72,7 @@ extension `FixedWidthInteger+Parseable Tests` {
 }
 
     extension `FixedWidthInteger+Parseable Tests`.`Parseable Integer Tests` {
-        @Test func acceptsLazyAndNonzeroStartCollections() throws {
+        @Test func `accepts lazy and nonzero start collections`() throws {
             let lazyBytes = "42".utf8.lazy.map(Byte.init(bitPattern:))
             #expect(try Int(ascii: lazyBytes) == 42)
             let storage = [Byte](utf8: "xx42")
