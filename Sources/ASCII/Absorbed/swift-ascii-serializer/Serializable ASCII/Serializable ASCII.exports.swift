@@ -1,3 +1,3 @@
 #if Serializer
-    @_exported public import Serializer
+    public import Serializer
 #endif

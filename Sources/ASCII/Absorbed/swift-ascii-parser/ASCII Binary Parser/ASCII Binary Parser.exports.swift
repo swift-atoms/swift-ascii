@@ -1,3 +1,3 @@
 #if Parser
-    @_exported public import Parser
+    public import Parser
 #endif
