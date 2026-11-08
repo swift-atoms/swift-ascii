@@ -1,3 +1,3 @@
 #if Parser
-    public import Parser
+    import Parser
 #endif
