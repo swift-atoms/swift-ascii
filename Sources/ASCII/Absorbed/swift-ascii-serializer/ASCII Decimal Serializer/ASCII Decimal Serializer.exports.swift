@@ -1,3 +1,3 @@
 #if Serializer
-    public import Serializer
+    import Serializer
 #endif
