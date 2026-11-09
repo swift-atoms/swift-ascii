@@ -25,25 +25,15 @@
                 return
             }
 
-            var value = output
-            let negative = T.isSigned && output < 0
-
             let start = buffer.count
 
-            if negative {
-
-                var magnitude = UInt64(bitPattern: Int64(truncatingIfNeeded: output))
-                magnitude = ~magnitude &+ 1
-                while magnitude > 0 {
-                    buffer.append(ASCII.Code(UInt8(truncatingIfNeeded: magnitude % 2) &+ 0x30))
-                    magnitude /= 2
-                }
+            var magnitude = output.magnitude
+            while magnitude > 0 {
+                buffer.append(ASCII.Code(UInt8(truncatingIfNeeded: magnitude % 2) &+ 0x30))
+                magnitude /= 2
+            }
+            if output < 0 {
                 buffer.append(ASCII.Code(0x2D))
-            } else {
-                while value > 0 {
-                    buffer.append(ASCII.Code(UInt8(truncatingIfNeeded: value % 2) &+ 0x30))
-                    value /= 2
-                }
             }
 
             var lo = start

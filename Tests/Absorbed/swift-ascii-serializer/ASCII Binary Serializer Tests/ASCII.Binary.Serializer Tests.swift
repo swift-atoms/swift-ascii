@@ -70,4 +70,13 @@
             #expect(codes == "-10000000".utf8.map(ASCII.Code.init))
         }
     }
+
+    extension `ASCII.Binary.Serializer Tests`.`Edge Case` {
+        @Test(arguments: [Int128.min, Int128(Int64.min) - 1, -18_446_744_073_709_551_617])
+        func `serializes Int128 below Int64 min`(_ value: Int128) {
+            let serializer = ASCII.Binary.Serializer<Int128>()
+            let codes = serializer.serialize(value)
+            #expect(codes == String(value, radix: 2).utf8.map(ASCII.Code.init))
+        }
+    }
 #endif
