@@ -278,6 +278,8 @@
                 }
             }
 
+            guard i == end else { throw .malformed }
+
             let q = explicitExp - nDigitsAfterPoint
 
             if !tooManyDigits,

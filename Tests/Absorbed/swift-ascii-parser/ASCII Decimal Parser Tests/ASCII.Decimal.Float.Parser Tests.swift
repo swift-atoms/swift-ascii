@@ -300,4 +300,21 @@
             #expect(contiguous.bitPattern == expected.bitPattern)
         }
     }
+
+    extension `ASCII.Decimal.Float.Parser Tests`.`Edge Case` {
+        @Test(arguments: ["1.5,tail", "42 ", "1e5x", "1e", "1.0e+", "-3.25abc", "12345678901234567890123x"])
+        func `contiguous parse rejects bytes left after the number`(_ text: String) {
+            let storage = [Byte](utf8: text)
+            #expect(throws: ASCII.Decimal.Float.Error.malformed) {
+                try ASCII.Decimal.Float.parse(storage.span)
+            }
+        }
+
+        @Test(arguments: ["1.5", "42", "1e5", "-3.25", "12345678901234567890123"])
+        func `contiguous parse accepts a span holding only the number`(_ text: String) throws {
+            let storage = [Byte](utf8: text)
+            let value = try ASCII.Decimal.Float.parse(storage.span)
+            #expect(value == Double(text))
+        }
+    }
 #endif
