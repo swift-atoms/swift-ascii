@@ -23,7 +23,7 @@
 
         @inlinable
         public var serialized: [Byte] {
-            asciiCodes.map(\.byte)
+            asciiCodes.map({ $0.byte })
         }
     }
 #endif

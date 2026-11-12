@@ -27,13 +27,13 @@ extension Swift.StringProtocol {
 
     public init?(ascii bytes: [Byte]) {
         guard bytes.allSatisfy({ $0.bitPattern < 0x80 }) else { return nil }
-        self.init(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
+        self.init(decoding: bytes.lazy.map({ $0.bitPattern }), as: UTF8.self)
     }
 
     @inlinable
     public init<Codes: Swift.Sequence>(ascii codes: Codes)
     where Codes.Element == ASCII::ASCII.Code {
-        self.init(decoding: codes.lazy.map(\.underlying), as: UTF8.self)
+        self.init(decoding: codes.lazy.map({ $0.underlying }), as: UTF8.self)
     }
 
     public init?(ascii byte: Byte) {
